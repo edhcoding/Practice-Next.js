@@ -1,8 +1,6 @@
 import { useEffect, useState } from "react";
 import axios from "@/lib/axios";
 import styles from "@/styles/Home.module.css";
-import Header from "@/components/Header";
-import Container from "@/components/Container";
 import SearchForm from "@/components/SearchForm";
 import ProductList from "@/components/ProductList";
 
@@ -24,11 +22,8 @@ export default function Home() {
 
   return (
     <>
-      <Header />
-      <Container>
-        <SearchForm />
-        <ProductList className={styles.products} products={products} />
-      </Container>
+      <SearchForm />
+      <ProductList className={styles.products} products={products} />
     </>
   );
 }
