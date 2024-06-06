@@ -1,0 +1,75 @@
+.productList {
+  display: grid;
+  gap: 24px;
+  padding: 0;
+  list-style: none;
+  grid-template-columns: repeat(3, 1fr);
+  /* grid-template-columns는 그리드 트랙의 크기를 지정 repaeat(반복횟수,반복값) 즉 코드를 보면 1fr 1fr 1fr */
+}
+
+.product {
+  display: block;
+  border: 1px solid #252525;
+  overflow: hidden;
+  height: 100%;
+  background-color: #1f1f1f;
+  color: #f9f9f9;
+  text-decoration: none;
+  border-radius: 10px;
+}
+
+.image {
+  width: 100%;
+  aspect-ratio: 1/1;
+  /* aspect-ratio: 넓이/높이 width에 맞춰서 지정 ex) width: 100px aspect-ratio: 3/1 높이는 33.33px */
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  padding: 30px;
+  letter-spacing: -0.03em;
+  /* letter-spacing 문자와 문자 사이의 간격을 지정하는 속성 */
+}
+
+.name {
+  font-size: 18px;
+  line-height: 26px;
+  white-space: nowrap;
+  /* white-space 요소 내부의 공백 문자 처리와 줄바꿈 규칙을 지정함 기본 normal, nowrap하면 글자 일자로 쭉 이어서 씀 */
+  text-overflow: ellipsis;
+  /* text-overflow는 white-space를 이용해 줄 바꿈을 하지 않을 때 넘치는 텍스트 처리를 어떻게 할 것인지를 처리하는 속성 */
+  /* clip: 넘치는 텍스트 자름, ellipsis: 말 줄임표로 잘린 텍스트가 있다고 표시(dsfa...) 점3개 */
+}
+
+.prices {
+  font-size: 15px;
+}
+
+.originalPrice {
+  margin-right: 5px;
+  color: #505050;
+  text-decoration: line-through;
+}
+
+.divider {
+  margin: 13px 0;
+  border: 0;
+  border-bottom: 1px solid #252525;
+}
+
+.starRating {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  font-size: 15px;
+  color: #fdc04a;
+}
+
+.likeCount {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  font-size: 15px;
+  color: #e85b81;
+}

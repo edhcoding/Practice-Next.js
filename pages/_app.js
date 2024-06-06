@@ -1,6 +1,8 @@
 import "@/styles/global.css";
-// .. 사용해서 상대경로를 사용했는데 @쓰면 프로젝트 최상위 폴더를 기준으로 경로 쓸 수 있음(alias)
+// 전체 css를 적용하려면 _app.js폴더에 css 임포트 하면 됨
 
 export default function App({ Component, pageProps }) {
+  // component는 현재 렌더링되고 있는 페이지를 나타냄
+  // pageProps는 해당 페이지에 전달되고있는 props를 나타냄
   return <Component {...pageProps} />;
 }

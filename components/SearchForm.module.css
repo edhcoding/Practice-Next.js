@@ -1,0 +1,25 @@
+.searchForm {
+  display: flex;
+  gap: 15px;
+}
+
+.searchInput {
+  padding: 0px 30px;
+  border: 1px solid #505050;
+  outline: none;
+  /* 보통 초점을 받는 a, input, button, select, textarea태그에 사용함 */
+  width: 400px;
+  background-color: #252525;
+  font-size: 18px;
+  color: #f9f9f9;
+  border-radius: 10px;
+}
+
+.searchButton {
+  padding: 16px 40px;
+  border: none;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 26px;
+  border-radius: 10px;
+}
