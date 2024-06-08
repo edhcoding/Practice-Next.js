@@ -1,6 +1,4 @@
-import Header from "@/components/Header";
 import styles from "@/styles/404.module.css";
-import Container from "@/components/Container";
 import ButtonLink from "@/components/ButtonLink";
 
 export default function NotFound() {

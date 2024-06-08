@@ -2,8 +2,6 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import axios from "@/lib/axios";
 import styles from "@/styles/Search.module.css";
-import Header from "@/components/Header";
-import Container from "@/components/Container";
 import SearchForm from "@/components/SearchForm";
 import ProductList from "@/components/ProductList";
 
