@@ -18,6 +18,11 @@
   border-radius: 10px;
 }
 
+:global(.light) .product {
+  color: #1f1f1f;
+  background-color: #f9f9f9;
+}
+
 .image {
   width: 100%;
   aspect-ratio: 1/1;

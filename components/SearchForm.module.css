@@ -23,3 +23,13 @@
   line-height: 26px;
   border-radius: 10px;
 }
+
+:global(.light) .searchInput {
+  color: #505050;
+  background-color: #f9f9f9;
+}
+
+:global(.light) .searchButton {
+  color: #f9f9f9;
+  background-color: #505050;
+}
