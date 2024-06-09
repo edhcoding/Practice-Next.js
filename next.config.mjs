@@ -23,6 +23,25 @@ const nextConfig = {
       },
     ];
   },
+  images: {
+    // 이 설정값은 우리가 사용할 외부 이미지 주소를 미리 next.js 서버에 알려주는 거임
+    // Image 컴포넌트를 public에 있는 이미지 아닌 외부 이미지 사용해서 사용하면 오류가 나올때 설정하는 거임
+    // Unhandled Runtime Error 이러한 오류가 나옴
+    // Error: Invalid src prop (https://learn-codeit-kr-static.s3.ap-northeast-2.amazonaws.com/codeitmall/product-09.png) on `next/image`,
+    // hostname "learn-codeit-kr-static.s3.ap-northeast-2.amazonaws.com" is not configured under images in your `next.config.js`
+    // See more info: https://nextjs.org/docs/messages/next-image-unconfigured-host
+    // 위 오류에서 나오는 오류에 맞춰서 아래 작성하면 됨
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "learn-codeit-kr-static.s3.ap-northeast-2.amazonaws.com",
+        // hostname은 도메인을 포함한 앞쪽의 주소를 작성
+        port: "",
+        pathname: "/codeitmall/**",
+        // ** 별2개를 작성하면 뒤쪽에 있는 모든 경로를 포함함
+      },
+    ],
+  },
 };
 
 export default nextConfig;

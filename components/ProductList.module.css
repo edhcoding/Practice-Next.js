@@ -24,6 +24,8 @@
 }
 
 .image {
+  position: relative;
+  z-index: 0;
   width: 100%;
   aspect-ratio: 1/1;
   /* aspect-ratio: 넓이/높이 width에 맞춰서 지정 ex) width: 100px aspect-ratio: 3/1 높이는 33.33px */

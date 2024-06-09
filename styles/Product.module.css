@@ -3,17 +3,17 @@
 }
 
 .name {
-  font-weight: 700;
   font-size: 26px;
+  font-weight: 700;
   line-height: 38px;
 }
 
 .englishName {
   margin-left: 15px;
-  color: #a4a4a4;
-  font-weight: 400;
   font-size: 18px;
+  font-weight: 400;
   line-height: 26px;
+  color: #a4a4a4;
 }
 
 .content {
@@ -28,8 +28,9 @@
 }
 
 .image {
-  border-radius: 10px;
+  position: relative;
   width: 100%;
+  border-radius: 10px;
   aspect-ratio: 1 / 1;
 }
 
@@ -39,30 +40,30 @@
 
 .sectionTitle {
   margin: 0 0 15px;
-  font-weight: 500;
   font-size: 18px;
+  font-weight: 500;
   line-height: 26px;
 }
 
 .info {
-  background: #1f1f1f;
   border: 1px solid #252525;
+  background: #1f1f1f;
   border-radius: 10px;
 }
 
 .infoTable {
-  width: 100%;
   margin: 20px 0;
-  font-size: 18px;
   border: none;
+  width: 100%;
+  font-size: 18px;
   border-spacing: 30px 10px;
 }
 
 .infoTable th {
   width: 115px;
-  color: #b5b5b5;
   font-weight: 400;
   line-height: 26px;
+  color: #b5b5b5;
   text-align: left;
 }
 
@@ -81,11 +82,11 @@
 
 .sizeForm {
   display: grid;
-  grid-template-columns: 1fr 1fr;
   gap: 20px 10px;
   padding: 30px;
-  background-color: #1f1f1f;
   border: 1px solid #252525;
+  background-color: #1f1f1f;
+  grid-template-columns: 1fr 1fr;
   border-radius: 10px;
 }
 
@@ -94,12 +95,12 @@
 }
 
 .input {
-  width: 100%;
   margin-top: 10px;
+  width: 100%;
 }
 
 .submit {
   display: block;
-  grid-column: 1 / 3;
   width: 100%;
+  grid-column: 1 / 3;
 }
