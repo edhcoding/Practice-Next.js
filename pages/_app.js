@@ -1,3 +1,4 @@
+import Head from "next/head";
 import Header from "@/components/Header";
 import Container from "@/components/Container";
 import { ThemeProvider } from "@/lib/ThemeContext";
@@ -9,6 +10,11 @@ export default function App({ Component, pageProps }) {
   // pageProps는 해당 페이지에 전달되고있는 props를 나타냄
   return (
     <>
+      <Head>
+        <title>Codeitmall</title>
+        <link rel="icon" href="/public/favicon.ico" />
+        {/* 모든 페이지 적용하고 싶다면 _app.js 파일에 작성 */}
+      </Head>
       <ThemeProvider>
         <Header />
         <Container>

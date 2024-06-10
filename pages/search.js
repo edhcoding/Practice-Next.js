@@ -4,6 +4,7 @@ import axios from "@/lib/axios";
 import styles from "@/styles/Search.module.css";
 import SearchForm from "@/components/SearchForm";
 import ProductList from "@/components/ProductList";
+import Head from "next/head";
 
 export default function Search() {
   const [products, setProducts] = useState([]);
@@ -24,6 +25,11 @@ export default function Search() {
 
   return (
     <div>
+      <Head>
+        <title>
+          {q} 검색 결과 - Codeitmall
+        </title>
+      </Head>
       <SearchForm initialValue={q} />
       <h2 className={styles.title}>
         <span className={styles.keyword}>{q}</span> 검색 결과
