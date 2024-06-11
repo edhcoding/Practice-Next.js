@@ -7,38 +7,44 @@ import StarRating from "@/components/StarRating";
 import SizeReviewList from "@/components/SizeReviewList";
 import Spinner from "@/components/Spinner";
 
-export async function getStaticPaths() {
-  // getStaticPaths: pages/**/[id].tsx 형태의 동적 라우팅 페이지 중, 빌드 시에 static하게 생성할 페이지를 정함
-  // 동적 경로를 사용하는 페이지에서 getStaticPaths라는 함수를 사용할 때 Next.js는 getStaticPaths에 지정된 모든 경로를 정적으로 미리 렌더링한다.
-  // getStaticProps 함수먼저 작성하고 getStaticPaths로 넘어 옴
-  // getStaticPaths함수는 다이나미한 페이지를 정적 생성할 때 어떤 페이지를 생성하는지 정해주는 용도임
+// 현재 정적생성 중인데 정적생성을 한다고 페이지가 변하지 않고 그대로 있는것은 아님
+// 일단 사이즈 추천부분이 비어있는 채로 정적생성을 하고 사이즈 추천 부분은 클라이언트에서 useEffect hook으로 불러오도록 구현되어 있음
+// 사이즈 추천 데이터는 사용자가 작성하기 때문에 자주 바뀌는 데이터임 => 서버 사이드 렌더링
+// next.js에서는 정적 생성, 서버 사이드 렌더링 동시에 적용 불가함
+// 그래서 getStaticPaths() 함수는 삭제, getStaticProps는 getServerSideProps로 이름 변경
 
-  const res = await axios.get("/products/");
-  const products = res.data.results;
-  const paths = products.map((product) => ({
-    params: { id: String(product.id) },
-  }));
+// export async function getStaticPaths() {
+//   // getStaticPaths: pages/**/[id].tsx 형태의 동적 라우팅 페이지 중, 빌드 시에 static하게 생성할 페이지를 정함
+//   // 동적 경로를 사용하는 페이지에서 getStaticPaths라는 함수를 사용할 때 Next.js는 getStaticPaths에 지정된 모든 경로를 정적으로 미리 렌더링한다.
+//   // getStaticProps 함수먼저 작성하고 getStaticPaths로 넘어 옴
+//   // getStaticPaths함수는 다이나미한 페이지를 정적 생성할 때 어떤 페이지를 생성하는지 정해주는 용도임
 
-  return {
-    // return으로 올수있는 값 (https://soojae.tistory.com/65)
-    // paths : pre-rendering할 경로를 지정함
-    // fallback : getStaticPaths에서 return하지 않은 path는 404 페이지를 return한다.
+//   const res = await axios.get("/products/");
+//   const products = res.data.results;
+//   const paths = products.map((product) => ({
+//     params: { id: String(product.id) },
+//   }));
 
-    paths,
-    // paths: [{ params: { id: "1" } }, { params: { id: "2" } }],
-    // params id로 각 상품의 id를 넣어 줌 - 참고로 params값은 사이트 주소에서 가져오는 값이므로 id 값을 문자열로 작성해야 함
-    // ex) 페이지 이름이 pages/posts/[postId]/[commentId]인 경우 params에는 postId와 commentId가 포함되어야 한다.
-    fallback: true,
-    // 정적 생성한 경로로 들어오지 않았을때 따로 처리해주지 않겠다는 의미임
-    // false로 하면 정적생성하지 않는 페이지 경로로 이동하면 404페이x지 나옴
-    // true로 하면 getStaticProps함수를 사용해 정적 생성을 하겠다는 거임
-    // true로 하면 미처 정적 생성하지 못한 페이지를 그때마다 getStaticProps 함수로 보여줄 수 있는데
-    // 일단 데이터 없이 보여줄 로딩 화면을 구현해야 함
-  };
-  // 이제 빌드를 해보면 1.html, 1.json, 2.html, 2.json이 생성 됨
-}
+//   return {
+//     // return으로 올수있는 값 (https://soojae.tistory.com/65)
+//     // paths : pre-rendering할 경로를 지정함
+//     // fallback : getStaticPaths에서 return하지 않은 path는 404 페이지를 return한다.
 
-export async function getStaticProps(context) {
+//     paths,
+//     // paths: [{ params: { id: "1" } }, { params: { id: "2" } }],
+//     // params id로 각 상품의 id를 넣어 줌 - 참고로 params값은 사이트 주소에서 가져오는 값이므로 id 값을 문자열로 작성해야 함
+//     // ex) 페이지 이름이 pages/posts/[postId]/[commentId]인 경우 params에는 postId와 commentId가 포함되어야 한다.
+//     fallback: true,
+//     // 정적 생성한 경로로 들어오지 않았을때 따로 처리해주지 않겠다는 의미임
+//     // false로 하면 정적생성하지 않는 페이지 경로로 이동하면 404페이x지 나옴
+//     // true로 하면 getStaticProps함수를 사용해 정적 생성을 하겠다는 거임
+//     // true로 하면 미처 정적 생성하지 못한 페이지를 그때마다 getStaticProps 함수로 보여줄 수 있는데
+//     // 일단 데이터 없이 보여줄 로딩 화면을 구현해야 함
+//   };
+//   // 이제 빌드를 해보면 1.html, 1.json, 2.html, 2.json이 생성 됨
+// }
+
+export async function getServerSideProps(context) {
   // getStaticProps: 빌드 시 데이터를 fetch하여 static 페이지를 생성
   // console.log(context);
   //   {
@@ -70,9 +76,14 @@ export async function getStaticProps(context) {
     };
   }
 
+  // 서버사이드 렌더링 적용 부분
+  const res = await axios.get(`/size_reviews/?product_id=${productId}`);
+  const sizeReviews = res.data.results ?? [];
+
   return {
     props: {
       product,
+      sizeReviews,
     },
   };
   // 내려준 props의 product는 아래 페이지 컴포넌트에서 사용할 거임
@@ -85,30 +96,30 @@ export async function getStaticProps(context) {
  * 그런데 실제 웹 사이트 운영 배포에서는 정적 생성을 하면 빌드할 때 딱 한번만 실행되니까 헷갈리지 않도록 주의!!
  */
 
-export default function Product({ product }) {
-  // const [product, setProduct] = useState();
-  const [sizeReviews, setSizeReviews] = useState([]);
-  const router = useRouter();
-  const { id } = router.query;
+export default function Product({ product, sizeReviews }) {
+  // // const [product, setProduct] = useState();
+  // const [sizeReviews, setSizeReviews] = useState([]);
+  // const router = useRouter();
+  // const { id } = router.query;
 
-  // async function getProduct(targetId) {
-  //   const res = await axios.get(`/products/${targetId}`);
-  //   const nextProduct = res.data;
-  //   setProduct(nextProduct);
+  // // async function getProduct(targetId) {
+  // //   const res = await axios.get(`/products/${targetId}`);
+  // //   const nextProduct = res.data;
+  // //   setProduct(nextProduct);
+  // // }
+
+  // async function getSizeReviews(targetId) {
+  //   const res = await axios.get(`/size_reviews/?product_id=${targetId}`);
+  //   const nextSizeReviews = res.data.results ?? [];
+  //   setSizeReviews(nextSizeReviews);
   // }
 
-  async function getSizeReviews(targetId) {
-    const res = await axios.get(`/size_reviews/?product_id=${targetId}`);
-    const nextSizeReviews = res.data.results ?? [];
-    setSizeReviews(nextSizeReviews);
-  }
+  // useEffect(() => {
+  //   if (!id) return;
 
-  useEffect(() => {
-    if (!id) return;
-
-    // getProduct(id);
-    getSizeReviews(id);
-  }, [id]);
+  //   // getProduct(id);
+  //   getSizeReviews(id);
+  // }, [id]);
 
   // if (!product) return null;
 
