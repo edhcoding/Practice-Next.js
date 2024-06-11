@@ -1,0 +1,73 @@
+.input {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 15px 26px;
+  position: relative;
+  background: #252525;
+  color: #b5b5b5;
+  cursor: pointer;
+  border-radius: 10px;
+}
+
+/* calc()는 괄호 안의 식을 계산한 결과를 속성값으로 사용하게 해주는 함수임 */
+/* transform: scaleY() 1보다 크면 확대, 작으면 축소 */
+/* transform-origin은 transform 을 위한 기준점을 정하기 위해 사용된다. 기본값은 중앙이기 때문에 주석 처리해보면 가운데로 사라짐 */
+.options {
+  padding: 15px 16px;
+  overflow: hidden;
+  position: absolute;
+  top: calc(100% + 10px);
+  right: 0;
+  left: 0;
+  z-index: 1;
+  background-color: #252525;
+  color: #b5b5b5;
+  transition: transform 0.2s ease-in-out;
+  border-radius: 10px;
+  transform: scaleY(0);
+  transform-origin: top center;
+}
+
+.option.selected,
+.option:hover {
+  background-color: #505050;
+}
+
+.arrow {
+  transition: transform 0.2s ease;
+  /* transition: 변화를일으킬css속성명, 변화얼마나일으킬지, 변화의속도를지정하는가속도(생략가능), 딜레이(몇초후에 움직이게할지) */
+  transform: rotate(180deg);
+}
+
+.opened .arrow {
+  transform: rotate(0);
+}
+
+.option {
+  padding: 10px;
+  cursor: pointer;
+}
+
+/* Y축만 늘리고 싶을때는 scaleY사용하는데 인수로 1넣으면 원래크기로 돌아옴 */
+.opened .options {
+  transform: scaleY(1);
+}
+
+/* :global을 사용하면 해당 스타일이 전역 범위로 적용됩니다. 
+  다른 모듈에서도 동일한 클래스 이름을 사용할 수 있고, 해당 클래스가 충돌하지 않도록 보장합니다.
+  안에 있는 소괄호 이 구문은 전체 선택자를 전역으로 지정하는 대신, 소괄호 안의 클래스 이름만 전역으로 지정합니다. */
+:global(.light) .input {
+  background-color: #e1e1e1;
+  color: #505050;
+}
+
+:global(.light) .options {
+  background-color: #e1e1e1;
+  color: #505050;
+}
+
+:global(.light) .option.selected,
+:global(.light) .option:hover {
+  background-color: #cfcfcf;
+}
