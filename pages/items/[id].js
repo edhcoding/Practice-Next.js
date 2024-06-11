@@ -1,11 +1,14 @@
-import { useState, useEffect } from "react";
-import { useRouter } from "next/router";
+import { useState } from "react";
 import Image from "next/image";
 import axios from "@/lib/axios";
+import Input from "@/components/Input";
 import styles from "@/styles/Product.module.css";
+import Button from "@/components/Button";
+import Spinner from "@/components/Spinner";
+import Dropdown from "@/components/Dropdown";
 import StarRating from "@/components/StarRating";
 import SizeReviewList from "@/components/SizeReviewList";
-import Spinner from "@/components/Spinner";
+import sizeReviewLabels from "@/lib/sizeReviewLabels"
 
 // 현재 정적생성 중인데 정적생성을 한다고 페이지가 변하지 않고 그대로 있는것은 아님
 // 일단 사이즈 추천부분이 비어있는 채로 정적생성을 하고 사이즈 추천 부분은 클라이언트에서 useEffect hook으로 불러오도록 구현되어 있음
@@ -96,7 +99,44 @@ export async function getServerSideProps(context) {
  * 그런데 실제 웹 사이트 운영 배포에서는 정적 생성을 하면 빌드할 때 딱 한번만 실행되니까 헷갈리지 않도록 주의!!
  */
 
-export default function Product({ product, sizeReviews }) {
+export default function Product({ product, sizeReviews: initialSizeReviews }) {
+  // 이번에는 상품 상세 페이지에서 데이터를 추가할 수 있는 입력폼을 추가하면서 데이터를 주고 받는 시나리오를 알아보자
+  const [sizeReviews, setSizeReviews] = useState(initialSizeReviews);
+  const [formValue, setFormValue] = useState({
+    size: "M",
+    sex: "male",
+    height: 173,
+    fit: "good",
+  });
+
+  async function handleSubmit(e) {
+    e.preventDefault();
+    const sizeReview = {
+      ...formValue,
+      productId: product.id,
+    };
+    const res = await axios.post("/size_reviews/", sizeReview);
+    // axios.post의 인수2개 역할 => post - 요청 데이터 처리, 주로 등록에 사용
+    // 첫번째 인수(URL): 요청을 보낼 서버의 URL => 이 URL은 백엔드에서 처리할 엔드포인트를 가리킴
+    // 두번째 인수(데이터): 서버로 전송할 데이터를 지정함 => 이 데이터는 보통 객체이고 요청 본문(body)에 포함되어 서버로 전송됨
+    const newSizeReview = res.data;
+    // 앞에 데이터를 가져오는 코드는 비동기이므로 setter함수에는 함수 형태로 사용해야 하는거 잊지말기
+    setSizeReviews((prevSizeReviews) => [newSizeReview, ...prevSizeReviews]);
+  }
+
+  async function handleInputChange(e) {
+    // input을 수정할 때 마다 state값을 바꿈
+    const { name, value } = e.target;
+    handleChange(name, value);
+  }
+
+  async function handleChange(name, value) {
+    setFormValue({
+      ...formValue,
+      [name]: value,
+    });
+  }
+
   // // const [product, setProduct] = useState();
   // const [sizeReviews, setSizeReviews] = useState([]);
   // const router = useRouter();
@@ -147,8 +187,8 @@ export default function Product({ product, sizeReviews }) {
              최적화 된 크기의 이미지를 가져옴 */}
           {/* lazy 로딩 기능을 기본 제공함 - 페이지 초기 로딩 속도 빨라짐 */}
           {/* 주의! 한가지 지켜야 할 점 - 이미지 크기 지정해야함(width, height 지정 안하면 오류!)
-             하지만 항상 이미지 크기를 지정할 수 있는건 아니기 때문에 유연하게 크기를 지정하는 방법도 지원함!
-             fill 속성 사용 - 그냥 fill 만 쓰면 되는데 fill 속성은 조상요소를 꽉 채우는 기능을 함 이때 조상은 포지셔닝된 요소여야 함 */}
+            하지만 항상 이미지 크기를 지정할 수 있는건 아니기 때문에 유연하게 크기를 지정하는 방법도 지원함!
+            fill 속성 사용 - 그냥 fill 만 쓰면 되는데 fill 속성은 조상요소를 꽉 채우는 기능을 함 이때 조상은 포지셔닝된 요소여야 함 */}
           {/* 
             <div style={{ position: "relative", width: "50%", height: "200px" }}>
               <Image fill src="/images/product.jpeg" alt="상품 이미지" />
@@ -207,6 +247,63 @@ export default function Product({ product, sizeReviews }) {
           </section>
           <section className={styles.section}>
             <h2 className={styles.sectionTitle}>사이즈 추천하기</h2>
+            <form className={styles.sizeForm} onSubmit={handleSubmit}>
+              <label className={styles.label}>
+                사이즈
+                <Dropdown
+                  className={styles.input}
+                  name="size"
+                  value={formValue.size}
+                  options={[
+                    { label: "S", value: "S" },
+                    { label: "M", value: "M" },
+                    { label: "L", value: "L" },
+                    { label: "XL", value: "XL" },
+                  ]}
+                  onChange={handleChange}
+                />
+              </label>
+              <label className={styles.label}>
+                성별
+                <Dropdown
+                  className={styles.input}
+                  name="sex"
+                  value={formValue.sex}
+                  onChange={handleChange}
+                  options={[
+                    { label: sizeReviewLabels.sex["male"], value: "male" },
+                    { label: sizeReviewLabels.sex["female"], value: "female" },
+                  ]}
+                />
+              </label>
+              <label className={styles.label}>
+                키
+                <Input
+                  className={styles.input}
+                  name="height"
+                  min="50"
+                  max="200"
+                  type="number"
+                  value={formValue.height}
+                  onChange={handleInputChange}
+                />
+              </label>
+              <label className={styles.label}>
+                사이즈 추천
+                <Dropdown
+                  className={styles.input}
+                  name="fit"
+                  value={formValue.fit}
+                  options={[
+                    { label: sizeReviewLabels.fit["small"], value: "small" },
+                    { label: sizeReviewLabels.fit["good"], value: "good" },
+                    { label: sizeReviewLabels.fit["big"], value: "big" },
+                  ]}
+                  onChange={handleChange}
+                />
+              </label>
+              <Button className={styles.submit}>작성하기</Button>
+            </form>
           </section>
         </div>
       </div>

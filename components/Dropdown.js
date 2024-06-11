@@ -1,5 +1,7 @@
 import { useEffect, useState, useRef } from "react";
+import Image from "next/image";
 import styles from "./Dropdown.module.css";
+import arrowImg from "@/public/arrow.svg"
 
 // Dropdown 컴포넌트는 select태그랑 비슷함
 export default function Dropdown({
@@ -76,7 +78,13 @@ export default function Dropdown({
       {selectedOption.label}
       {/* 점 표기법으로 객체의 값을 하나씩 가져올 수 있음 selectedOption이 { label: "라이트", value: "light" }일 때
       selectedOption.label은 "라이트", selectedOption.value는 "light"를 가리킴 */}
-      <span className={styles.arrow}>▴</span>
+      <Image
+        className={styles.arrow}
+        src={arrowImg.src}
+        width={12}
+        height={9}
+        alt="▼"
+      />
       <div className={styles.options}>
         {options.map((option) => {
           const selected = value === option.value;
