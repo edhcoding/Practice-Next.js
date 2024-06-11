@@ -10,7 +10,8 @@ export default function Study() {
       일어나는 시점임 웹 브라우저가 HTML 코드를 받아오기 이전에 렌더링 하는 거임
 
       프리 렌더링 2가지 방식 -  정적 생성(static generation), 서버사이드 렌더링(server-side-rendering)
-      1. 정적 생성 (static generation)
+      
+      1. 정적 생성 (static generation) - 업데이트가 잘 안일어나는 페이지에 적합
       - 빌드를 하는 시점에 렌더링 하는 거임 , 빌드는 배포 하기전에 소스코드를 실행할 수 있는 형태로 만들어 놓는 것
       - 정적 생성은 쉽게 말해서 빌드할 때 HTML을 만드는 거임
       - 소스 코드를 빌드하면서 파일로 미리 만들어 두었다가 웹 브라우저로 접속하면 만들어 놓은걸 그대로 보여줌

@@ -31,6 +31,12 @@ export default function App({ Component, pageProps }) {
         <Header />
         <Container>
           <Component {...pageProps} />
+          {/* _app.js에서는 Next프레임워크에서 내려주는 Component와 pageProps를 받을 수 있다.
+          이를 통해 각 페이지마다 getServerSideProps, getStaticProps, getStaticPath, getLayout 등을 설정하는데에 쓸 수 있다. */}
+          {/* Component: 이는 현재 라우트에 해당하는 실제 페이지 컴포넌트를 가리킨다.
+          예를 들어, 사용자가 `/about`에 접속하면, Next.js는 `pages/about.js`에 정의된 컴포넌트를 Component로 넘겨준다. */}
+          {/* pageProps: 이는 각 페이지 컴포넌트가 서버 사이드 또는 정적 생성 과정에서 가져온 초기 프로퍼티를 포함한다.
+          getServerSideProps, getStaticProps 등에서 반환된 객체가 pageProps로 전달된다. */}
         </Container>
       </ThemeProvider>
     </>
