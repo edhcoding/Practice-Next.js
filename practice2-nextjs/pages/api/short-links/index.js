@@ -1,4 +1,5 @@
 import dbConnect from "@/db/dbConnect";
+import ShortLink from "@/db/models/ShortLink";
 import mongoose from "mongoose";
 
 // api폴더 안의 파일의 경로가 곧 엔드포인트 경로가 됨
@@ -10,7 +11,10 @@ export default async function handler(req, res) {
   await dbConnect();
   // connection이 잘 되었는지 확인하기 위해서 mongoose의 connection.readyState를 콘솔에 출력
   // 개발 모드키고 이 엔드포인트에 아무 리퀘스트 보내보면
-  console.log(mongoose.connection.readyState);
+  // console.log(mongoose.connection.readyState);
+
+  // 이번에는 모델확인
+  console.log(ShortLink);
 
   // 이 함수는 Next.js 서버에 /api/short-links라는 경로로 리퀘스트가 들어올 때 실행할 함수임
   // 함수 안에는 request, response 두 파라미터가 있는데 이걸 이용해서 리퀘스트를 참조하거나 리스폰스를 보낼 수 있음
