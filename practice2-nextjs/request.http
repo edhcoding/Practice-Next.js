@@ -27,3 +27,17 @@ Cookie: session-id=codeit1234
 ###
 
 PATCH http://localhost:3000/api/short-links
+
+
+###
+
+PATCH http://localhost:3000/api/short-links/666aa96b9a74660ba7959084
+Content-Type: application/json
+
+{
+  "title" : "codeit-edit2"
+}
+
+###
+
+DELETE http://localhost:3000/api/short-links/666aab0a9a74660ba7959088
