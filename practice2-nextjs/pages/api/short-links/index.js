@@ -25,29 +25,19 @@ export default async function handler(req, res) {
   // 자바스크립트 객체를 아규먼트로 전달하면 Content-Type header도 알아서 보내 줌
   switch (req.method) {
     case "POST":
-      res.status(201).send({
-        title: "위키피디아 Next.js",
-        url: "https://en.wikipedia.org/wiki/Next.js",
-      });
+      // POST 리퀘스트와 리퀘스트 바디를 보내면 ShortLink모델로 DB에 저장하고
+      // GET 리퀘스트를 보내면 DB에 있는 ShortLink 모델을 리스폰스로 보내도록 할거임
+      // 데이터를 생성할때는 mongoose의 create 메서드를 사용
+      // req.body에는 다양한 값들이 들어올 수 있지만 mongoose에서는 우리가 만들어 둔 스키마에 맞지 않는
+      // 데이터는 무시하기 때문에 이렇게 작성해도 무방함
+      // DB에 저장하는 작업은 비동기이기 때문에 await로 기다려주고 이렇게 생성한 도큐먼트를 리스폰스로 보내줌
+      const newShortLink = await ShortLink.create(req.body);
+      res.status(201).send(newShortLink);
       break;
     case "GET":
-      res.send([
-        {
-          id: "abc",
-          title: "위키피디아 Next.js",
-          url: "https://en.wikipedia.org/wiki/Next.js",
-        },
-        {
-          id: "def",
-          title: "코드잇 자유게시판",
-          url: "https://codeit.kr/community/general",
-        },
-        {
-          id: "ghi",
-          title: "코드잇 질문답변",
-          url: "https://codeit.kr/community/questions",
-        },
-      ]);
+      // 도큐먼트 여러개 가져오도록 해보자
+      const shortLinks = await ShortLink.find();
+      res.send(shortLinks);
       break;
     default:
       res.status(404).send();

@@ -1,3 +1,8 @@
+GET http://localhost:3000/api/short-links/666aa96b9a74660ba7959084
+
+
+###
+
 GET http://localhost:3000/api/short-links
 
 ###
@@ -10,7 +15,8 @@ POST http://localhost:3000/api/short-links/
 Content-Type: application/json
 
 {
-  "title" : "codeit"
+  "title" : "codeit2",
+  "url": "https://codeit.kr"
 }
 
 ###
