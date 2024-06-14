@@ -1,5 +1,5 @@
 import dbConnect from '@/db/dbConnect';
-import ShortLink from '@/db/models/ShortLink';
+import QRCode from '@/db/models/QRCode';
 
 export default async function handler(req, res) {
   await dbConnect();
@@ -7,17 +7,17 @@ export default async function handler(req, res) {
 
   switch (req.method) {
     case 'GET':
-      const shortLink = await ShortLink.findById(id);
-      res.send(shortLink);
+      const qrcode = await QRCode.findById(id);
+      res.send(qrcode);
       break;
 
     case 'PATCH':
-      const updatedShortLink = await ShortLink.findByIdAndUpdate(id, req.body, { new: true });
-      res.send(updatedShortLink);
+      const updatedQRCode = await QRCode.findByIdAndUpdate(id, req.body, { new: true });
+      res.send(updatedQRCode);
       break;
 
     case 'DELETE':
-      await ShortLink.findByIdAndDelete(id);
+      await QRCode.findByIdAndDelete(id);
       res.status(204).send();
       break;
 

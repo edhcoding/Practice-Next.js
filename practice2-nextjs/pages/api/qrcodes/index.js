@@ -1,18 +1,18 @@
 import dbConnect from '@/db/dbConnect';
-import ShortLink from '@/db/models/ShortLink';
+import QRCode from '@/db/models/QRCode';
 
 export default async function handler(req, res) {
   await dbConnect();
 
   switch (req.method) {
     case 'POST':
-      const shortLink = await ShortLink.create(req.body);
-      res.status(201).send(shortLink);
+      const newQRCode = await QRCode.create(req.body);
+      res.status(201).send(newQRCode);
       break;
 
     case 'GET':
-      const shortLinks = await ShortLink.find();
-      res.send(shortLinks);
+      const qrcodes = await QRCode.find();
+      res.send(qrcodes);
       break;
 
     default:
