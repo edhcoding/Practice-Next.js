@@ -1,13 +1,22 @@
 import Head from 'next/head';
-import Link from '@/components/Link';
-import Button from '@/components/Button';
-import styles from '@/styles/QRCodeListPage.module.css';
 import QRCodeList from '@/components/QRCodeList';
+import Button from '@/components/Button';
+import Link from '@/components/Link';
+import styles from '@/styles/QRCodeListPage.module.css';
+import dbConnect from '@/db/dbConnect';
+import QRCode from '@/db/models/QRCode';
 
-// QR코드 목록을 확인하는 페이지
-export default function QRCodeListPage() {
-  const qrCodes = [];
+export async function getServerSideProps() {
+  await dbConnect();
+  const qrcodes = await QRCode.find();
+  return {
+    props: {
+      qrcodes: JSON.parse(JSON.stringify(qrcodes)),
+    }
+  }
+}
 
+export default function QRCodeListPage({ qrcodes }) {
   return (
     <>
       <Head>
@@ -20,7 +29,7 @@ export default function QRCodeListPage() {
             새로 만들기
           </Button>
         </header>
-        <QRCodeList items={qrCodes} />
+        <QRCodeList items={qrcodes} />
       </div>
     </>
   );
