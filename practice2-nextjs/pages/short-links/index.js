@@ -1,8 +1,8 @@
 import Head from 'next/head';
-import ShortLinkList from '@/components/ShortLinkList';
-import Button from '@/components/Button';
 import Link from '@/components/Link';
+import Button from '@/components/Button';
 import styles from '@/styles/ShortLinkListPage.module.css';
+import ShortLinkList from '@/components/ShortLinkList';
 
 // 짧은 주소 목록을 확인하는 페이지
 export default function ShortLinkListPage() {

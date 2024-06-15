@@ -2,8 +2,8 @@ import '@/styles/global.css';
 import Head from 'next/head';
 import Image from 'next/image';
 import Link from '@/components/Link';
-import logoImage from '@/public/logo.svg';
 import styles from '@/styles/App.module.css';
+import logoImage from '@/public/logo.svg';
 import { Noto_Sans_KR } from 'next/font/google';
 
 const notoSansKR = Noto_Sans_KR({

@@ -8,21 +8,23 @@
   background-color: #fff;
   padding: 24px;
   position: sticky;
+  /* relative랑 기능이 같으면서 지정위치에 고정 */
   top: 0;
   flex-shrink: 0;
+  /* flex-shrink는 flex-grow와 쌍을 이루는 속성, 아이템이 flex-basis의 값보다 작아질 수 있는지를 결정함 */
   z-index: 1;
-}
-
-.container {
-  margin: 0 auto;
-  width: 100%;
-  max-width: 900px;
 }
 
 .nav {
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+
+.container {
+  margin: 0 auto;
+  width: 100%;
+  max-width: 900px;
 }
 
 .links {

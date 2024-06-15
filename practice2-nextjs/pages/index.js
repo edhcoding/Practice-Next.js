@@ -1,17 +1,17 @@
-import { useRef, useState } from 'react';
-import Image from 'next/image';
-import Button from '@/components/Button';
-import Input from '@/components/Input';
-import styles from '@/styles/Home.module.css';
-import cutUrlImage from '@/public/cut-url.svg';
-import copyToClipboard from '@/lib/copyToClipboard';
+import { useRef, useState } from "react";
+import Image from "next/image";
+import Input from "@/components/Input";
+import Button from "@/components/Button";
+import styles from "@/styles/Home.module.css";
+import cutUrlImage from "@/public/cut-url.svg";
+import copyToClipboard from "@/lib/copyToClipboard";
 
 // 간단한 짧은 주소를 생성하고 생성된 짧은 주소를 보여주는 페이지
-// 그래서 NEXT_PUBLIC_BASE_URL이라는 환경변수 사용함 이 환경변수는 NEXT_PUBLIC이라고 시작하니까 
+// 그래서 NEXT_PUBLIC_BASE_URL이라는 환경변수 사용함 이 환경변수는 NEXT_PUBLIC이라고 시작하니까
 // 클라이언트 사이드에서 공개되는 환경변수임
 export default function Home() {
-  const [url, setUrl] = useState('');
-  const [shortUrl, setShortUrl] = useState('');
+  const [url, setUrl] = useState("");
+  const [shortUrl, setShortUrl] = useState("");
   const inputRef = useRef();
 
   function handleChange(e) {
@@ -21,7 +21,7 @@ export default function Home() {
   async function handleCreate(e) {
     e.preventDefault();
     // API 요청
-    const newShortUrl = 'abcdef';
+    const newShortUrl = "abcdef";
     setShortUrl(newShortUrl);
   }
 
@@ -30,11 +30,14 @@ export default function Home() {
     inputRef.current.select();
     const text = inputRef.current.value;
     await copyToClipboard(text);
-    alert('복사했습니다. ctrl + v로 붙여넣으세요');
+    alert("복사했습니다. ctrl + v로 붙여넣으세요");
   }
 
   return (
     <>
+      {/* <style jsx> 태그는 JSX 안에서 스타일을 정의할 때 사용함 (Next.js에서 기본적으로 지원하는 CSS-in-JS 라이브러리임)
+    해당 스코프 내에서만 정용되고 전역으로 사용못함 */}
+      {/* global 속성을 사용해서 전역으로 사용함, body요소에 스타일을 지정하는 것과 유사함 */}
       <style jsx global>{`
         body {
           background-color: #2d2c34;
