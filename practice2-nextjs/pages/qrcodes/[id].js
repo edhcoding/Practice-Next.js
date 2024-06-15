@@ -1,49 +1,46 @@
+import { useState } from 'react';
 import Head from 'next/head';
-import { useRouter } from 'next/router';
-import QRCodeForm, { QRCodeFormType } from '@/components/QRCodeForm';
-import styles from '@/styles/QRCodeEditPage.module.css';
-import QRCode from '@/db/models/QRCode';
+import QRCodeList from '@/components/QRCodeList';
+import Button from '@/components/Button';
+import Link from '@/components/Link';
+import styles from '@/styles/QRCodeListPage.module.css';
 import dbConnect from '@/db/dbConnect';
+import QRCode from '@/db/models/QRCode';
 import axios from '@/lib/axios';
 
-export async function getServerSideProps(context) {
-  const { id } = context.query;
+export async function getServerSideProps() {
   await dbConnect();
-  const qrcode = await QRCode.findById(id);
-  if (!qrcode) {
-    return {
-      notFound: true,
-    };
-  } else {
-    return {
-      props: {
-        qrcode: JSON.parse(JSON.stringify(qrcode)),
-      },
-    };
-  }
+  const qrcodes = await QRCode.find();
+  return {
+    props: {
+      qrcodes: JSON.parse(JSON.stringify(qrcodes)),
+    },
+  };
 }
 
-export default function QRCodeEditPage({ qrcode: initialQRCode }) {
-  const router = useRouter();
-  const { id } = router.query;
+export default function QRCodeListPage({ qrcodes: initialQRCodes }) {
+  const [qrcodes, setQRCodes] = useState(initialQRCodes);
 
-  async function handleSubmit(values) {
-    await axios.patch(`/qrcodes/${id}`, values);
-    router.push('/qrcodes');
+  async function handleDelete(id) {
+    await axios.delete(`/qrcodes/${id}`);
+    setQRCodes((prevQRCodes) =>
+      prevQRCodes.filter((qrcode) => qrcode._id !== id)
+    );
   }
 
   return (
     <>
       <Head>
-        <title>QRCode 수정하기 - Shortit</title>
+        <title>QRCode 만들기 - Shortit</title>
       </Head>
       <div className={styles.page}>
-        <h1 className={styles.title}>QRCode 수정하기</h1>
-        <QRCodeForm
-          type={QRCodeFormType.Edit}
-          initialValues={initialQRCode}
-          onSubmit={handleSubmit}
-        />
+        <header className={styles.header}>
+          <h1 className={styles.title}>QRCode 만들기</h1>
+          <Button as={Link} href="/qrcodes/new">
+            새로 만들기
+          </Button>
+        </header>
+        <QRCodeList items={qrcodes} onDelete={handleDelete} />
       </div>
     </>
   );
