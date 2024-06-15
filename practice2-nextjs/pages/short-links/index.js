@@ -1,3 +1,4 @@
+import { useState } from "react";
 import Head from "next/head";
 import Link from "@/components/Link";
 import Button from "@/components/Button";
@@ -22,7 +23,16 @@ export async function getServerSideProps(context) {
 }
 
 // 짧은 주소 목록을 확인하는 페이지
-export default function ShortLinkListPage(shortLinks) {
+export default function ShortLinkListPage({ shortLinks: initialShortLinks }) {
+  const [shortLinks, setShortLinks] = useState(initialShortLinks);
+
+  async function handleDelete(id) {
+    await axios.delete(`/short-links/${id}`);
+    setShortLinks((prevShortLinks) =>
+      prevShortLinks.filter((shortLink) => shortLink._id !== id)
+    );
+  }
+
   return (
     <>
       <Head>
@@ -36,7 +46,7 @@ export default function ShortLinkListPage(shortLinks) {
             새로 만들기
           </Button>
         </header>
-        <ShortLinkList items={shortLinks} />
+        <ShortLinkList items={shortLinks} onDelete={handleDelete} />
       </div>
     </>
   );
