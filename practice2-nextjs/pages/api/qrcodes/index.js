@@ -6,11 +6,13 @@ export default async function handler(req, res) {
 
   switch (req.method) {
     case 'POST':
+      // 도큐먼트 생성
       const newQRCode = await QRCode.create(req.body);
       res.status(201).send(newQRCode);
       break;
 
     case 'GET':
+      // 모든 도큐먼트 가져오기
       const qrcodes = await QRCode.find();
       res.send(qrcodes);
       break;
