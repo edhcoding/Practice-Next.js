@@ -1,6 +1,6 @@
 import Head from 'next/head';
-import QRCodeForm from '@/components/QRCodeForm';
 import styles from '@/styles/QRCodeCreatePage.module.css';
+import QRCodeForm from '@/components/QRCodeForm';
 
 // QR코드를 생성하는 페이지
 export default function QRCodeCreatePage() {

@@ -17,6 +17,7 @@ export default function ShortLinkListPage() {
         <header className={styles.header}>
           <h1 className={styles.title}>주소 줄이기</h1>
           <Button as={Link} href="/short-links/new">
+            {/* variant 지정안해서 기본 스타일인 primary로 적용됨 */}
             새로 만들기
           </Button>
         </header>

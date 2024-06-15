@@ -1,6 +1,6 @@
 import Head from 'next/head';
-import QRCodeForm, { QRCodeFormType } from '@/components/QRCodeForm';
 import styles from '@/styles/QRCodeEditPage.module.css';
+import QRCodeForm, { QRCodeFormType } from '@/components/QRCodeForm';
 
 // QR코드를 수정하는 페이지
 export default function QRCodeEditPage() {

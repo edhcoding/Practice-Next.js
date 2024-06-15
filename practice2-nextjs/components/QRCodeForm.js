@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import { useRouter } from 'next/router';
-import styles from './QRCodeForm.module.css';
 import Card from './Card';
 import Input from './Input';
 import Button from './Button';
+import styles from './QRCodeForm.module.css';
 
 // QR 코드를 만드는 입력 폼 컨포넌트
 export const QRCodeFormType = {

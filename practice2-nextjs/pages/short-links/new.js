@@ -1,6 +1,6 @@
-import ShortLinkForm from '@/components/ShortLinkForm';
-import styles from '@/styles/ShortLinkCreatePage.module.css';
 import Head from 'next/head';
+import styles from '@/styles/ShortLinkCreatePage.module.css';
+import ShortLinkForm from '@/components/ShortLinkForm';
 
 // 짧은 주소를 생성하는 페이지
 export default function ShortLinkCreatePage() {

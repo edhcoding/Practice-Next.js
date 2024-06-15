@@ -1,8 +1,8 @@
 import Head from 'next/head';
-import QRCodeList from '@/components/QRCodeList';
-import Button from '@/components/Button';
 import Link from '@/components/Link';
+import Button from '@/components/Button';
 import styles from '@/styles/QRCodeListPage.module.css';
+import QRCodeList from '@/components/QRCodeList';
 
 // QR코드 목록을 확인하는 페이지
 export default function QRCodeListPage() {
