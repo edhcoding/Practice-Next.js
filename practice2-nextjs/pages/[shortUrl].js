@@ -1,7 +1,7 @@
 import dbConnect from "@/db/dbConnect";
 import ShortLink from "@/db/models/ShortLink";
 
-export async function getSeverSideProps(context) {
+export async function getServerSideProps(context) {
   const { shortUrl } = context.query;
   // shortUrl을 가지고 mongoDB에서 도큐먼트 가져올 거임
   await dbConnect();
