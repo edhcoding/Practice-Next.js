@@ -110,4 +110,10 @@
  * const query = useSuspenseQuery({...});
  * suspense기능을 사용하는 것 외에는 전부 동일한데 query와는 다르게 enabled, placeholderData옵션을 사용할 수 없다는 차이점있음
  * 또한 throwOnError 값을 기본으로 지정할 수 없으며 만약에 반환되는 데이터가 없을 시 자동으로 error boundary로 error를 전파함
+ * 
+ * React Query는 데이터를 어떻게 저장할 까?
+ * context를 사용하기 때문임, context API를 사용하기 때문에 useClientProvider 하위에 써놓은 query들을 서로 공유해서 사용할 수 있는거임
+ * 좀 더 자세히 알아보자면 컴포넌트에서 useQuery가 실행되면 생성된 query instance와 함께 키 값으로 매핑시키는 과정을 거침
+ * 그리고 fetch된 데이터를 query 객체 내부에 저장함으로써 캐시를 관리하게 됨
+ * context를 사용하기 때문에 저장된 캐쉬값은 다른 컴포넌트에서 사용할 수 있음
  */
