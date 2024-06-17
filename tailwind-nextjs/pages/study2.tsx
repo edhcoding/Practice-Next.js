@@ -77,17 +77,21 @@
  * - 캐시가 존재하냐 아니냐 차이 isFetching은 존재하고 isLoading은 존재하기도 안하기도함
  *
  * mutations
- * - CRUD중에서 RUD에 해당하는 기능, 즉 서버의 데이터를 수정할 때 사용하는 기능임
+ * - CRUD중에서 RUD에 해당하는 기능(create빼고 전부), 즉 서버의 데이터를 수정할 때 사용하는 기능임
  *
  * ex) useMutation함수를 선언함으로써 mutations기능을 사용할 수 있음
  * import { useMutation } from "@tanstack/react-query"
  *
  * const query = useMutation({
  *  queryFn: fetchTodo             // useMutation에서의 필수값으로는 queryKey값이 안들어감
+ *  ...options
  * });
  *
  * mutaions 옵션
  * - onMutate: mutate함수가 실행되기전에 실행되는 함수로 optimistic update에 유용하게 사용할 수 있음
+ * 낙관적 업데이트(Optimistic Update)란 단어가 어색하게 느껴질 수 있지만, 
+ * 낙관적이라는 말은 서버로 보낸 요청이 정상적일 것을 예상하고, 클라이언트의 데이터를 변경시켜 
+ * 요청 response가 오기 전에 클라이언트의 데이터를 미리 변경시키는 작업을 말한다.
  *
  * mutations 반환값
  * - mutate: mutation함수를 실행시키는 함수
