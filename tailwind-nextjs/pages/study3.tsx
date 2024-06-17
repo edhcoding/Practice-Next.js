@@ -60,4 +60,84 @@
  * - onSuccess() : 데이터 fetch 성공 시 실행되는 콜백. 매개변수는 response 데이터가 들어있다.
  * - onError() : 데이터 fetch 실패 시 실행되는 콜백. 매개변수는 Error 정보가 들어있다.
  * - onSettled() : 데이터 fetch 완료 시 실행되는 콜백. 성공/실패 여부와 상관없이 실행.
+ * 
+ * 참고자료
+ * https://abangpa1ace.tistory.com/entry/%EC%9E%91%EC%84%B1%EC%A4%91React-Query-2-Queries%EC%BF%BC%EB%A6%AC?category=927152#google_vignette
+ * 
+ * useMutation()
+ * 원격 데이터 소스로 변형(mutation) 요청(ex:RUD 읽기, 업데이트, 삭제 작업)을 보내고
+ * 결과 데이터 및 상태 변경을 관리하는 데 사용함, 보통 useMutation()은 사용자 생성 또는 기존 
+ * 엔티티 업데이트 등의 데이터 변형 작업을 수행해야 할 때 활용되고 
+ * 변형 요청, 캐싱, 데이터의 업데이트를 자동으로 처리함
+ * 
+ * 기본 형태
+ * const { data, isLoading, mutate } = useMutation({ mutationFn, ...options });
+ * 
+ * useMutation() 첫 번째 인자인 mutationFn 함수는 변형 또는 수정 작업을 수행하는 함수를 나타내고 
+ * mutationFn을 전달하여 데이터 생성, 업데이트 또는 삭제 method를 지정할 수 있음
+ * 
+ * 두 번째 인자인 options은 쿼리에 대한 구성 옵션을 나타냄
+ * 
+ * 많이 쓰이는 옵션
+ * - onMutate: mutation 전에 실행되는 함수로, 미리 렌더링 하고자할 때 유용함, 이 함수가 반환하는 값을 아래 함수들의 context로 사용 가능 하다.
+ * - onSuccess: mutation이 성공하고 결과를 전달할 때 실행.
+ * - onError:  mutation이 실패했을 시 에러를 전달한다.
+ * - onSettled: mutation의 성공/실패 여부와 상관없이 완료됬을 때 실행. 
+ * 
+ * ex)
+ * function AddBlogPost() {
+ * const queryClient = useQueryClient();
+ * 
+ * const mutation = useMutation({ addPost, {
+ *   onSuccess: () => {
+ *     // 블로그 게시물 목록을 업데이트하기 위해 'posts' 쿼리를 무효화하고 다시 가져온다.
+ *     queryClient.invalidateQueries('posts');   
+ *   },
+ *  }
+ * });
+ * 
+ * const handleSubmit = async (e) => {
+ *   e.preventDefault();
+ *   const { title, body } = e.target.elements;
+ *   // 새 블로그 게시물을 추가하기 위해 mutationFn을 호출한다.
+ *   mutation.mutate({ title: title.value, body: body.value });
+ *   e.target.reset();
+ *   // mutate는 useMutation을 조작할 수 있는 속성임, mutate안에는 useMutation의 비동기 함수에 들어갈 인자가 들어갑니다.
+ * };
+ * 
+ * return (
+ *   <div>
+ *     <h2>Add New Blog Post</h2>
+ *     <form onSubmit={handleSubmit}>
+ *       <label>
+ *         Title:
+ *         <input type="text" name="title" required />
+ *       </label>
+ *       <br />
+ *       <label>
+ *         Body:
+ *         <textarea name="body" required />
+ *       </label>
+ *       <br />
+ *       <button type="submit" disabled={mutation.isLoading}>
+ *         {mutation.isLoading ? 'Adding...' : 'Add Post'}
+ *       </button>
+ *     </form>
+ *   </div>
+ * );
+ * }
+ * 
+ * queryClient.invalidateQueries()
+ * invalidateQueries는 특정 쿼리를 무효화 해주는 메서드임
+ * 쿼리를 무효화한다는 것은 무슨 뜻일까 ? 
+ * - invalidateQueries 메서드를 통해 특정 쿼리를 무효화하면, 다음과 같은 두 가지 현상이 발생한다.
+ * 해당 쿼리의 상태를 stale로 바꾼다. stale된 상태는 useQuery 또는 관련 훅에서 사용 중인 모든 staleTime 구성에 오버라이드한다.
+ * - 만약 useQuery 나 관련 훅을 통해 쿼리가 렌더링되고 있다면 백그라운드에서도 refetch한다.
+ * => 그래서 invalidQueries 메서드를 이용해 특정 쿼리를 무효화하면, 해당 쿼리의 data를 신선하지 않은
+ * 상태로 간주해 이후 data를 fetch 할 때 캐시의 data가 아닌 서버로부터 새로운 data를 받아올 수 
+ * 있도록 하는 것임
+ * 
+ * 참고자료
+ * https://hjk329.github.io/react/react-query-query-invalidation/
+ * https://velog.io/@minw0_o/tanstack-query-staleTime-invalidQueries%EB%A5%BC-%EC%9D%B4%EC%9A%A9%ED%95%9C-data-%EC%83%81%ED%83%9C-%EA%B4%80%EB%A6%AC
  */
