@@ -12,6 +12,7 @@ export default function Home() {
         <div className="h-32 w-32 rounded-full border-2 border-black bg-red-500 transition hover:bg-red-300"></div>
         <div className="h-32 w-32 rounded-full border-2 border-black bg-yellow-500 transition hover:bg-red-300"></div>
         <div className="h-32 w-32 rounded-full border-2 border-black bg-green-500 transition hover:bg-red-300"></div>
+        <div className="h-32 w-32 rounded-full border-2 border-black bg-black-500 transition hover:bg-red-300"></div>
       </div>
       <div>|||</div>
     </section>
